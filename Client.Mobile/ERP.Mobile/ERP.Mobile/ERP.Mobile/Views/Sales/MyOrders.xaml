@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviours="clr-namespace:ERP.Mobile.Behaviors"
+             x:Class="ERP.Mobile.Views.Sales.MyOrders">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="0" x:Name="MyListView"
+            ItemsSource="{Binding MyOrders}"
+            behaviours:ListViewAttachedBehavior.Command="{Binding ViewOrderCommand}"
+            CachingStrategy="RecycleElement"
+            RowHeight="70">
+            <ListView.Header>
+                <StackLayout Padding="10" Orientation="Horizontal" BackgroundColor="#cccccc">
+                    <Label Text="Transaction #" HorizontalOptions="StartAndExpand"/>
+                    <Label Text="Status" HorizontalOptions="EndAndExpand" FontSize="Small"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="40">
+                        <StackLayout Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="{Binding TransactionNo}" FontSize="Medium" />
+                                    <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}" FontSize="Small"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1">
+                                    <Label VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding Status}" />
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1" BackgroundColor="{DynamicResource ThemeColor}">
+            <StackLayout>
+                <Button Command="{Binding NewOrderCommand}" Text="Create New Order"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

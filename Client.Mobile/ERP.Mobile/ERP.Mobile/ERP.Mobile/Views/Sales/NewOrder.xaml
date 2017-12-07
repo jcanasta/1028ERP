@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:ERP.Mobile.Behaviors"
+             xmlns:converters="clr-namespace:ERP.Mobile.Converters"
+             x:Class="ERP.Mobile.Views.Sales.NewOrder"
+             x:Name="root">
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="50"/>-->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <!--<Grid Grid.Row="0" BackgroundColor="{DynamicResource ThemeColor}">
+            <Entry Placeholder="Filter"/>
+        </Grid>-->
+        <ListView Grid.Row="0" x:Name="MyListView"
+            ItemsSource="{Binding Products, Mode=TwoWay}"
+            RowHeight="70"
+            b:ListViewAttachedBehavior.Command="{Binding AddItemCommand}"
+            CachingStrategy="RecycleElement">
+            <ListView.Header>
+                <StackLayout Padding="10" Orientation="Horizontal" BackgroundColor="#cccccc">
+                    <Label Text="Item" HorizontalOptions="StartAndExpand"/>
+                    <Label Text="Price" HorizontalOptions="EndAndExpand" FontSize="Small"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell Height="40">
+                        <StackLayout Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}" FontSize="Medium" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" />
+                                    </StackLayout>
+                                    <Label Text="{Binding Description}" FontSize="Small"/>
+                                </StackLayout>
+                                <StackLayout Grid.Column="1">
+                                    <Label IsVisible="{Binding IsAddedToCart, Converter={converters:NegateBooleanConverter}}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Text="{Binding UnitPrice, StringFormat='{0:C}'}" />
+                                    <Button Text="Remove" Command="{Binding BindingContext.RemoveItemCommand, Source={x:Reference root}}" CommandParameter="{Binding}" IsVisible="{Binding IsAddedToCart}"/>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1" BackgroundColor="{DynamicResource ThemeColor}">
+            <StackLayout>
+                <Button Text="Check Out" Command="{Binding CheckoutCommand}"/>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
